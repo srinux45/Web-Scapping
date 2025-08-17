@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Finder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <h1>Job Finder</h1>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Search Section -->
+    <section class="search">
+        <div class="container">
+            <h2>Find Your Next Job</h2>
+            <form id="search-form" method="POST">
+                <input type="text" name="role" placeholder="Job title, keywords or company" required>
+                <input type="text" name="location" placeholder="Location" required>
+                <select name="experience">
+                    <option value="">Experience Level</option>
+                    <option value="1">1-3 years</option>
+                    <option value="3">3-5 years</option>
+                    <option value="5">5+ years</option>
+                </select>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Job Listings Section -->
+    <section class="jobs">
+        <div class="container">
+            <h2>Job Listings</h2>
+            <div class="job-columns">
+                {% if message %}
+                    <p>{{ message }}</p>
+                {% else %}
+                    {% for job in jobs %}
+                        <div class="job-listing {{ job.source }}">
+                            <h3><a href="{{ job.url }}" target="_blank">{{ job.title }}</a></h3> <!-- Clickable link to job -->
+                            <p>{{ job.company }}</p>
+                            <p>{{ job.location }}</p>
+                            <p>{{ job.summary }}</p>
+                            <p>Source: {{ job.source }}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Job Finder. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>
